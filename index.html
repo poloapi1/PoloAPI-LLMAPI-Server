@@ -50,7 +50,7 @@
             position: relative;
         }
         
-        .hero-image {
+     .hero-image {
             width: 100%;
             max-height: 500px;
             object-fit: cover;
@@ -58,26 +58,108 @@
             margin-bottom: 40px;
             box-shadow: var(--box-shadow);
         }
+
+
+
+
         
-        .logo {
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-        }
+/* 让 PoloAPI 有高级渐变+流动效果 */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+ margin-top: 40px;
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 15px;
+  line-height: 1;
+
+  /* 渐变文字 + 流动动画 */
+  background: linear-gradient(
+    120deg,
+    var(--primary-color),
+    #8b5cf6,
+    var(--primary-color)
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  animation: logo-gradient-move 8s ease-in-out infinite;
+}
+
+/* 鼠标移上去，轻微放大一点，更有“活着”的感觉 */
+.logo:hover {
+  transform: translateY(-1px) scale(1.01);
+  transition: transform 0.3s ease;
+}
+
+/* 徽章：轻微流动 + 发光 */
+.logo-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  vertical-align: super;
+  margin-left: 10px;
+
+  background: linear-gradient(
+    120deg,
+    var(--secondary-color),
+    #6366f1,
+    var(--secondary-color)
+  );
+  background-size: 220% 100%;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25),
+              0 6px 16px rgba(15, 23, 42, 0.25);
+
+  animation: badge-gradient-move 5s linear infinite;
+}
+
+/* 鼠标移到徽章上，有一点点呼吸缩放 */
+.logo-badge:hover {
+  transform: translateY(-1px) scale(1.03);
+  transition: transform 0.25s ease;
+}
+
+/* Logo 渐变缓慢左右流动 */
+@keyframes logo-gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 徽章渐变更快一点，像微弱的能量流动 */
+@keyframes badge-gradient-move {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25),
+                0 4px 12px rgba(15, 23, 42, 0.20);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.45),
+                0 8px 20px rgba(79, 70, 229, 0.35);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25),
+                0 4px 12px rgba(15, 23, 42, 0.20);
+  }
+}
+
+
         
-        .logo-badge {
-            display: inline-block;
-            background: var(--secondary-color);
-            color: white;
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            vertical-align: super;
-            margin-left: 10px;
-            font-weight: 500;
-        }
+       
         
         .tagline {
             font-size: 1.5rem;
@@ -164,13 +246,75 @@
             background-color: #c86a4a;
         }
         
-        .button.secondary {
-            background-color: var(--primary-color);
-        }
-        
-        .button.secondary:hover {
-            background-color: #1a2a3a;
-        }
+.button.secondary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #6366F1, #8B5CF6);
+    border: none;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    /* 动态渐变背景 */
+    background-size: 200% 100%;
+    animation: btn-gradient-move 5s linear infinite;
+}
+
+/* 悬停：轻微浮起 */
+.button.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99,102,241,0.35);
+}
+
+/* 光线扫过动画 */
+.button.secondary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,0.4) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.button.secondary:hover::after {
+    animation: btn-shine 0.9s ease;
+    opacity: 1;
+}
+
+/* 渐变左右流动 */
+@keyframes btn-gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 亮光滑过动画 */
+@keyframes btn-shine {
+    0% { left: -80%; }
+    100% { left: 120%; }
+}
+
+
+
         
         .button i {
             margin-right: 8px;
@@ -629,12 +773,17 @@
     <div class="wrapper">
         <div class="container">
             <header class="header">
-                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="AI技术背景" class="hero-image">
-                <div class="logo">PoloAPI - <span>企业级AI聚合平台</span>  <span class="logo-badge">源头供应商</span></div>
-         
+          
+
+                            <div class="logo">
+  PoloAPI - <span>企业级AI聚合平台</span>
+  <span class="logo-badge">源头供应商</span>
+                              
+</div>
+
+
             
                 <h1 class="headline">全球AI大模型<span>源头直供</span></h1>
-              
           
                 <p class="description">作为上游API供应商，我们提供<strong class="emphasized">企业级高并发支持</strong>、<strong class="emphasized">官方5折起的源头价格</strong>以及<strong class="emphasized">7×24小时技术支持</strong>，助力企业快速接入全球领先AI能力</p>
                 
@@ -644,17 +793,34 @@
                     <div class="model-badge"><i class="fab fa-google"></i> Gemini</div>
                     <div class="model-badge"><i class="fab fa-x-twitter"></i> Grok</div>
                     <div class="model-badge"><i class="fas fa-brain"></i> Deepseek</div>
+                    <div class="model-badge"><i class="fas fa-brain"></i> Qwen</div>
+                     <div class="model-badge"><i class="fas fa-brain"></i> Doubao</div>
+                      
                 </div>
-                
+                             
                 <div class="buttons">
-                    <a href="https://poloai.top/detail" class="button"><i class="fas fa-rocket"></i>立即体验</a>
-                    <a href="https://code.poloapi.com/" class="button secondary"><i class="fas fa-book"></i>开发文档</a>
-                                        <a href="https://poloapi.top/about" class="button secondary"><i class="fas fa-book"></i>联系微信：cainiao9e</a>
+                    <a href="https://poloai.top/detail" class="button secondary"><i class="fas fa-rocket"></i>自助体验</a>
+                    <a href="https://polodaili.apifox.cn/" class="button secondary"><i class="fas fa-book"></i>开发文档</a>
+
                 </div>
             </header>
             
+<div class="section">
+       <h3 class="section-title">价格分组</h3>
+    <ul style="margin-top: 15px; margin-left: 20px;">
+                            <li>Claude Gpt Gemini AWS直连官key - 4.8元/刀</li>
+                            <li>Claude AZ渠道 - 0.7元/刀</li>
+                            <li>Claude逆向 纯MAX号池 - 0.6元/刀</li>
+                        </ul>
+              
+              
+              
+               
+            </div>
+            
+            
             <div class="section">
-                <h2 class="section-title">源头优势 价格透明</h2>
+                <h2 class="section-title">源头优势 价格透明 企业对公</h2>
                 <div class="feature-card">
                     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="API接口示意图" class="feature-image">
                     <h3 class="feature-title">直接供应 成本最优</h3>
@@ -756,23 +922,25 @@
             <div class="divider"></div>
             
             <div class="section">
-                <h2 class="section-title">联系我们</h2>
-                <p>作为上游供应商，我们不仅提供API服务，还可对接AI人才资源（大模型微调、量化投资、AI落地应用等）。公司位于广州大学城，欢迎企业客户洽谈合作。</p>
-                
-                <div class="contact-grid">
+            
+      <h2 class="section-title">联系我们</h2>
+    <ul style="margin-top: 15px; margin-left: 20px;">
+                            <li>作为上游供应商，我们不仅提供API服务，也有自主开发的产品：大模型微调、量化投资、AI落地应用等，如有机会可以深入合作。</li>
+                            <li>选择我们的几大主要原因：比官方更低的价格、无须充值所有平台更方便、低成本学习更多api技术解决方案</li>
+                            <li>公司位于美丽大广州，另有海内外主体，欢迎企业客户洽谈咨询。</li>
+                        </ul>
+              
+
+
+                       <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fab fa-weixin"></i>
                         </div>
-                        <div class="contact-text">客服微信：Cainiao9e</div>
+                         <div class="contact-text">联系微信：cainiao9e</div>
                     </div>
                     
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-qq"></i>
-                        </div>
-                        <div class="contact-text">QQ：2934088411</div>
-                    </div>
+                
                     
                     <div class="contact-item">
                         <div class="contact-icon">
@@ -785,7 +953,7 @@
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="contact-text">商务合作：contact@PoloAPi.com</div>
+                        <div class="contact-text">商务合作：contact@PoloAPI.com</div>
                     </div>
                 </div>
                 
@@ -795,7 +963,7 @@
                             <i class="fas fa-server"></i>
                         </div>
                         <div class="link-text">
-                            <strong>API端点：</strong><a href="https://poloai.top" target="_blank">https://poloai.top</a>
+                            <strong>商务合作：源头号池，全球渠道，有上千大企业服务案例，支持国内外主体对公合作！微信：api2047</strong>
                         </div>
                     </div>
                     
@@ -813,7 +981,7 @@
                             <i class="fas fa-book"></i>
                         </div>
                         <div class="link-text">
-                            <strong>技术文档：</strong><a href="https://docapi.poloapi.com/" target="_blank">https://code.poloapi.com/</a>
+                            <strong>技术文档：</strong><a href="https://polodaili.apifox.cn/" target="_blank">https://polodaili.apifox.cn/</a>
                         </div>
                     </div>
                 </div>
@@ -832,9 +1000,10 @@
                     <a href="#" class="footer-link">企业合作</a>
                 </div>
                 <p>&copy; 2025 PoloAPI - 企业级AI大模型API源头供应商. 保留所有权利.</p>
-                <p style="margin-top: 10px; font-size: 0.85rem;">粤ICP备XXXXXXXX号</p>
+
             </footer>
         </div>
     </div>
 </body>
 </html>
+              
